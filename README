@@ -3,15 +3,15 @@ db4.2
 Oracle Berkeley DB version 4.2
 
 Runtime requirements:
-  cygwin-1.5.24-2
+  cygwin-1.5.25-7
   jamvm-1.4.5-1	(for Java bindings)
-  tcl-8.4.15-1	(for Tcl bindings)
+  tcl-8.4.16-2	(for Tcl bindings)
 
 Build requirements:
-  cygwin-1.5.24-2
+  cygwin-1.5.25-7
   autoconf2.5-2.61-1
   binutils-20060817-1
-  cygport-0.3.1-1
+  cygport-0.3.8-1
   fastjar-0.94-1
   gawk-3.1.5-4
   gcc-core-3.4.4-3
@@ -50,6 +50,8 @@ This will create:
 Files included in the binary packages:
 
 (db4.2)
+  /etc/postinstall/db4.2.sh
+  /etc/preremove/db4.2.sh
   /usr/bin/db4.2_archive.exe
   /usr/bin/db4.2_checkpoint.exe
   /usr/bin/db4.2_deadlock.exe
@@ -75,9 +77,8 @@ Files included in the binary packages:
   /usr/share/java/db-4.2.jar
 
 (tcl-db4.0)
-  /etc/postinstall/tcl-db4.2.sh
-  /etc/preremove/tcl-db4.2.sh
   /usr/lib/tcl8.4/db4.2/cygdb_tcl-4.2.dll
+  /usr/lib/tcl8.4/db4.2/pkgIndex.tcl
 
 (libdb4.2-devel)
   /etc/postinstall/libdb4.2-devel.sh
@@ -1193,6 +1194,9 @@ Files included in the binary packages:
 ------------------
 
 Port Notes:
+
+----- version 4.2.52.5-2 -----
+Fixed alternatives script.
 
 ----- version 4.2.52.5-1 -----
 Built with cygport; bump to patch 5.
