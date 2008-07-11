@@ -1,0 +1,105 @@
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x configure -x config.hin -x libtool.ac -x db.jar origsrc/db-4.2.52/dist/aclocal/sosuffix.ac src/db-4.2.52/dist/aclocal/sosuffix.ac
+--- origsrc/db-4.2.52/dist/aclocal/sosuffix.ac	2003-04-19 00:11:55.000000000 -0500
++++ src/db-4.2.52/dist/aclocal/sosuffix.ac	2008-01-01 21:32:48.203125000 -0600
+@@ -18,8 +18,8 @@
+ 	versuffix=""
+ 	release=""
+ 	libname=libfoo
+-	eval _SOSUFFIX=\"$shrext\"
+-	if test "X$_SOSUFFIX" = "" ; then
++	eval _SOSUFFIX=\"$shrext_cmds\"
++	if test "$_SOSUFFIX" = "" ; then
+ 		_SOSUFFIX=".so"
+ 		if test `$LIBTOOL_PROG --config | grep build_libtool_libs | grep no` 2>/dev/null; then
+ 			if test "X$_SOSUFFIX_MESSAGE" = "X"; then
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x configure -x config.hin -x libtool.ac -x db.jar origsrc/db-4.2.52/dist/aclocal/tcl.ac src/db-4.2.52/dist/aclocal/tcl.ac
+--- origsrc/db-4.2.52/dist/aclocal/tcl.ac	2003-10-13 16:04:04.000000000 -0500
++++ src/db-4.2.52/dist/aclocal/tcl.ac	2008-01-01 21:32:48.218750000 -0600
+@@ -50,7 +50,7 @@
+ 
+ 	    # First check to see if --with-tclconfig was specified.
+ 	    if test "${with_tclconfig}" != no; then
+-		if test -f "${with_tclconfig}/tclConfig.sh" ; then
++		if test -e "${with_tclconfig}/tclConfig.sh" ; then
+ 		    ac_cv_c_tclconfig=`(cd ${with_tclconfig}; pwd)`
+ 		else
+ 		    AC_MSG_ERROR([${with_tclconfig} directory doesn't contain tclConfig.sh])
+@@ -59,8 +59,8 @@
+ 
+ 	    # check in a few common install locations
+ 	    if test x"${ac_cv_c_tclconfig}" = x ; then
+-		for i in `ls -d /usr/local/lib 2>/dev/null` ; do
+-		    if test -f "$i/tclConfig.sh" ; then
++		for i in `ls -d /usr/lib /usr/local/lib 2>/dev/null` ; do
++		    if test -e "$i/tclConfig.sh" ; then
+ 			ac_cv_c_tclconfig=`(cd $i; pwd)`
+ 			break
+ 		    fi
+@@ -80,7 +80,7 @@
+ AC_DEFUN(SC_LOAD_TCLCONFIG, [
+ 	AC_MSG_CHECKING([for existence of $TCL_BIN_DIR/tclConfig.sh])
+ 
+-	if test -f "$TCL_BIN_DIR/tclConfig.sh" ; then
++	if test -e "$TCL_BIN_DIR/tclConfig.sh" ; then
+ 		AC_MSG_RESULT([loading])
+ 		. $TCL_BIN_DIR/tclConfig.sh
+ 	else
+@@ -111,7 +111,7 @@
+ 	aix4.[[2-9]].*)
+ 		LIBTSO_LIBS="$LIBTSO_LIBS $TCL_LIB_SPEC $TCL_LIB_FLAG"
+ 		LIBTSO_LIBS="$LIBTSO_LIBS -L$TCL_EXEC_PREFIX/lib -ltcl$TCL_VERSION";;
+-	aix*)
++	aix*|cygwin*)
+ 		LIBTSO_LIBS="$LIBTSO_LIBS $TCL_LIB_SPEC $TCL_LIB_FLAG";;
+ 	esac
+ 	AC_SUBST(TCL_BIN_DIR)
+@@ -134,7 +134,7 @@
+ 	SC_PATH_TCLCONFIG
+ 	SC_LOAD_TCLCONFIG
+ 
+-	if test x"$TCL_PREFIX" != x && test -f "$TCL_PREFIX/include/tcl.h"; then
++	if test x"$TCL_PREFIX" != x && test -e "$TCL_PREFIX/include/tcl.h"; then
+ 		TCFLAGS="-I$TCL_PREFIX/include"
+ 	fi
+ 
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x configure -x config.hin -x libtool.ac -x db.jar origsrc/db-4.2.52/dist/configure.ac src/db-4.2.52/dist/configure.ac
+--- origsrc/db-4.2.52/dist/configure.ac	2003-10-14 19:55:17.000000000 -0500
++++ src/db-4.2.52/dist/configure.ac	2008-01-01 21:32:48.234375000 -0600
+@@ -55,6 +55,7 @@
+ AC_SUBST(MAKEFILE_CXX)
+ AC_SUBST(MAKEFILE_CXXLINK)
+ AC_SUBST(MAKEFILE_SOLINK)
++AC_SUBST(MAKEFILE_TSOLINK)
+ AC_SUBST(MAKEFILE_XSOLINK)
+ AC_SUBST(OSDIR)
+ AC_SUBST(PATH_SEPARATOR)
+@@ -315,6 +316,7 @@
+ 
+ MAKEFILE_CC="\$(LIBTOOL) --mode=compile ${MAKEFILE_CC}"
+ MAKEFILE_SOLINK="\$(LIBTOOL) --mode=link ${MAKEFILE_CCLINK} -avoid-version"
++MAKEFILE_TSOLINK="\$(LIBTOOL) --mode=link ${MAKEFILE_CCLINK} -module -avoid-version"
+ MAKEFILE_CCLINK="\$(LIBTOOL) --mode=link ${MAKEFILE_CCLINK}"
+ MAKEFILE_CXX="\$(LIBTOOL) --mode=compile ${MAKEFILE_CXX}"
+ MAKEFILE_XSOLINK="\$(LIBTOOL) --mode=link ${MAKEFILE_CXXLINK} -avoid-version"
+@@ -325,6 +327,7 @@
+ case "$host_os" in
+ cygwin*)
+ 	MAKEFILE_SOLINK="$MAKEFILE_SOLINK -no-undefined"
++	MAKEFILE_TSOLINK="$MAKEFILE_TSOLINK -no-undefined"
+ 	MAKEFILE_XSOLINK="$MAKEFILE_XSOLINK -no-undefined";;
+ esac
+ 
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x configure -x config.hin -x libtool.ac -x db.jar origsrc/db-4.2.52/lock/lock_region.c src/db-4.2.52/lock/lock_region.c
+--- origsrc/db-4.2.52/lock/lock_region.c	2003-07-28 13:36:59.000000000 -0500
++++ src/db-4.2.52/lock/lock_region.c	2008-01-01 21:32:48.250000000 -0600
+@@ -21,6 +21,10 @@
+ #include "dbinc/db_shash.h"
+ #include "dbinc/lock.h"
+ 
++#ifdef __lock_init
++#undef __lock_init
++#endif
++
+ static int  __lock_init __P((DB_ENV *, DB_LOCKTAB *));
+ static size_t
+ 	    __lock_region_size __P((DB_ENV *));
